@@ -6,6 +6,7 @@ import java.util.List;
 public class Player {
     public List<Card> hand;
     public int number;
+    public int shields;
     public Player(int number){
         hand = new ArrayList<>();
         this.number = number;
