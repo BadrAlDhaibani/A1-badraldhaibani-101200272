@@ -120,4 +120,27 @@ class MainTest {
         }
         assertEquals(52, adventureDeck.getSize());
     }
+
+    @Test
+    public void RESP_3_test_1(){
+        List<Player> players = new ArrayList<>();
+        for (int i = 0; i < 4; i++){
+            players.add(new Player(i+1));
+        }
+        boolean winnerFlag = false;
+        int playerTurn = 0; //following List index, so 0 == P1, 1 == P2 etc...
+        while (!winnerFlag){
+            //Rest of the round
+            players.get(playerTurn).shields += 2; //example to finish loop
+            for(Player player : players){
+                if (player.shields >= 7){
+                    winnerFlag = true;
+                }
+            }
+            playerTurn++;
+            if (playerTurn > 3) {
+                playerTurn = 0;
+            }
+        }
+    }
 }
