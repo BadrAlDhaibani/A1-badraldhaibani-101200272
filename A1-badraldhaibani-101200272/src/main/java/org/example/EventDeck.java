@@ -1,6 +1,7 @@
 package org.example;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class EventDeck {
@@ -35,6 +36,10 @@ public class EventDeck {
                 cards.add(new Card("Event",3));
             }
         }
+    }
+    public void shuffleDeck(){
+        Collections.shuffle(cards);
+        Collections.shuffle(discards);
     }
     public int getSize(){
         return cards.size();

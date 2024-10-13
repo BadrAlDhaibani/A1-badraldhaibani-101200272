@@ -2,6 +2,7 @@ package org.example;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collections;
 
 public class AdventureDeck {
     public List<Card> cards;
@@ -62,6 +63,10 @@ public class AdventureDeck {
                 cards.add(new Card("Weapon",30));
             }
         }
+    }
+    public void shuffleDeck(){
+        Collections.shuffle(cards);
+        Collections.shuffle(discards);
     }
     public int getSize(){
         return cards.size();
