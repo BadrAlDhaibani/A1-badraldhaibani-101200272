@@ -2,6 +2,8 @@ package org.example;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
+import java.util.ArrayList;
+import java.util.List;
 
 class MainTest {
     @Test
@@ -97,5 +99,25 @@ class MainTest {
                 assertEquals(3, eventDeck.cards.get(i).getValue());
             }
         }
+    }
+
+    @Test
+    public void RESP_2_test_1(){
+        List<Player> players = new ArrayList<>();
+        for (int i = 0; i < 4; i++){
+            players.add(new Player(i+1));
+        }
+        AdventureDeck adventureDeck = new AdventureDeck();
+        adventureDeck.shuffleDeck();
+        for (int i = 0; i < 12; i++){
+            players.get(0).hand.add(adventureDeck.cards.removeFirst());
+            players.get(1).hand.add(adventureDeck.cards.removeFirst());
+            players.get(2).hand.add(adventureDeck.cards.removeFirst());
+            players.get(3).hand.add(adventureDeck.cards.removeFirst());
+        }
+        for (Player player : players){
+            assertEquals(12, player.hand.size());
+        }
+        assertEquals(52, adventureDeck.getSize());
     }
 }
