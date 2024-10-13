@@ -26,13 +26,24 @@ public class Main {
             Scanner scanner = new Scanner(System.in);
             System.out.println("P"+players.get(playerTurn).number+"'s turn (Press 'Enter' to continue...)");
             scanner.nextLine();
-            players.get(playerTurn).shields += 2; //example to finish loop
+            if(eventDeck.cards.isEmpty()){
+                System.out.println("cards empty!");
+                eventDeck.cards.addAll(eventDeck.discards);
+                eventDeck.discards.clear();
+                eventDeck.shuffleDeck();
+            }
+            Card eventDrawn = eventDeck.cards.removeFirst();
+            eventDeck.discards.add(eventDrawn);
+            System.out.println("Drawn "+eventDrawn.getType().charAt(0)+eventDrawn.getValue());
+            players.get(playerTurn).shields += 1; //example to finish loop
             //System.out.println("P"+players.get(playerTurn).number+" "+players.get(playerTurn).shields); //test print
+            //Check for winner
             for(Player player : players){
                 if (player.shields >= 7){
                     winnerFlag = true;
                 }
             }
+            //Rotate players
             playerTurn++;
             if (playerTurn > 3) {
                 playerTurn = 0;

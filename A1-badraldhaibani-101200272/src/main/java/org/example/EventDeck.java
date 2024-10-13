@@ -39,7 +39,6 @@ public class EventDeck {
     }
     public void shuffleDeck(){
         Collections.shuffle(cards);
-        Collections.shuffle(discards);
     }
     public int getSize(){
         return cards.size();
