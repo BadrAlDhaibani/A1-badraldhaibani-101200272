@@ -4,6 +4,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+import java.io.InputStream;
+import java.io.ByteArrayInputStream;
 
 class MainTest {
     @Test
@@ -122,18 +125,24 @@ class MainTest {
     }
 
     @Test
-    public void RESP_3_test_1(){
+    public void RESP_3_test_1() {
         List<Player> players = new ArrayList<>();
-        for (int i = 0; i < 4; i++){
-            players.add(new Player(i+1));
+        for (int i = 0; i < 4; i++) {
+            players.add(new Player(i + 1));
         }
         boolean winnerFlag = false;
         int playerTurn = 0; //following List index, so 0 == P1, 1 == P2 etc...
-        while (!winnerFlag){
+        while (!winnerFlag) {
+            String sampleInput = "\n";
+            InputStream inputStream = new ByteArrayInputStream(sampleInput.getBytes());
+            System.setIn(inputStream);
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("P" + players.get(playerTurn).number + "'s turn (Press 'Enter' to continue...)");
+            scanner.nextLine();
             //Rest of the round
             players.get(playerTurn).shields += 2; //example to finish loop
-            for(Player player : players){
-                if (player.shields >= 7){
+            for (Player player : players) {
+                if (player.shields >= 7) {
                     winnerFlag = true;
                 }
             }
@@ -142,5 +151,10 @@ class MainTest {
                 playerTurn = 0;
             }
         }
+    }
+
+    @Test
+    public void RESP_4_test_1(){
+
     }
 }
