@@ -155,6 +155,12 @@ class MainTest {
 
     @Test
     public void RESP_4_test_1(){
-
+        EventDeck eventDeck = new EventDeck();
+        eventDeck.shuffleDeck();
+        Card eventDrawn = eventDeck.cards.removeFirst();
+        eventDeck.discards.add(eventDrawn);
+        System.out.println("Drawn "+eventDrawn.getType().charAt(0)+eventDrawn.getValue());
+        assertEquals(16, eventDeck.cards.size()); //card drawn from event deck
+        assertEquals(1, eventDeck.discards.size()); //card added to discard
     }
 }
