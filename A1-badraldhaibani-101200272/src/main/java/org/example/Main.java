@@ -2,6 +2,7 @@ package org.example;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args){
@@ -22,6 +23,9 @@ public class Main {
         boolean winnerFlag = false;
         int playerTurn = 0;
         while (!winnerFlag){
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("P"+players.get(playerTurn).number+"'s turn (Press 'Enter' to continue...)");
+            scanner.nextLine();
             players.get(playerTurn).shields += 2; //example to finish loop
             //System.out.println("P"+players.get(playerTurn).number+" "+players.get(playerTurn).shields); //test print
             for(Player player : players){
