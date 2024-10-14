@@ -45,22 +45,22 @@ public class AdventureDeck {
         }
         for (int i = 50; i < 100; i++){
             if(i < 56){ //for 6 (D) Daggers (value=5)
-                cards.add(new Card("Weapon",5));
+                cards.add(new Card("Weapon",5, "Dagger"));
             }
             else if(i < 68){ //for 12 (H) Horses (value=10)
-                cards.add(new Card("Weapon",10));
+                cards.add(new Card("Weapon",10, "Horse"));
             }
             else if(i < 84){ //for 16 (S) Swords (value=10)
-                cards.add(new Card("Weapon",10));
+                cards.add(new Card("Weapon",10, "Sword"));
             }
             else if(i < 92){ //for 8 (B) Battle-Axes (value=15)
-                cards.add(new Card("Weapon",15));
+                cards.add(new Card("Weapon",15, "Battle-Axe"));
             }
             else if(i < 98){ //for 6 (L) Lances (value=20)
-                cards.add(new Card("Weapon",20));
+                cards.add(new Card("Weapon",20, "Lance"));
             }
-            else if(i < 100){ //for 2 (E) Excaliburs (value=30)
-                cards.add(new Card("Weapon",30));
+            else if(i < 100){ //for 2 (E) Excalibur's (value=30)
+                cards.add(new Card("Weapon",30, "Excalibur"));
             }
         }
     }
