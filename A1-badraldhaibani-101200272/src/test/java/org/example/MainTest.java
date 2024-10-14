@@ -228,4 +228,24 @@ class MainTest {
         assertEquals(12, player.hand.size());
         assertEquals(1, adventureDeck.getDiscardSize());
     }
+
+    @Test
+    public void RESP_7_test_1() {
+        List<Player> players = new ArrayList<>();
+        players.add(new Player(1));
+        players.add(new Player(2));
+        players.add(new Player(3));
+        players.add(new Player(4));
+
+        Player currentPlayer = players.get(2); //player 3's turn
+        //Q card gets drawn
+        Card quest = new Card("Quest", 4);
+
+        String simulatedInput = "n\nn\nn\nn\n"; // All players decline (y/n inputs)
+        InputStream inputStream = new ByteArrayInputStream(simulatedInput.getBytes());
+        Scanner scanner = new Scanner(inputStream);
+
+        Player sponsor = currentPlayer.sponsor(quest, players, scanner);
+        assertNull(sponsor);
+    }
 }
