@@ -213,4 +213,16 @@ class MainTest {
             }
         }
     }
+
+    @Test
+    public void RESP_6_test_1() {
+        AdventureDeck adventureDeck = new AdventureDeck();
+        Player player = new Player(1);
+        for(int i = 0; i < 12; i++){
+            player.draw(adventureDeck);
+        }
+        player.draw(adventureDeck); //Player hand should be full and trimmed functionality handled in draw function
+        assertEquals(12, player.hand.size());
+        assertEquals(1, adventureDeck.getDiscardSize());
+    }
 }
