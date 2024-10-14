@@ -138,7 +138,7 @@ class MainTest {
             InputStream inputStream = new ByteArrayInputStream(sampleInput.getBytes());
             System.setIn(inputStream);
             Scanner scanner = new Scanner(System.in);
-            System.out.println("P" + players.get(playerTurn).number + "'s turn (Press 'Enter' to continue...)");
+            System.out.print("P" + players.get(playerTurn).number + "'s turn (Press 'Enter' to continue...)");
             scanner.nextLine();
             //Rest of the round
             players.get(playerTurn).shields += 2; //example to finish loop
@@ -187,6 +187,7 @@ class MainTest {
         cards.add(new Card("Event", 3)); //Prosperity
         Player currentPlayer = players.getFirst();
         AdventureDeck adventureDeck = new AdventureDeck();
+        Scanner scanner = new Scanner(System.in);
         for (Card card : cards) {
             if (Objects.equals(card.getType(), "Event") && card.getValue() == 1) {
                 if (currentPlayer.shields <= 2) {
@@ -200,14 +201,14 @@ class MainTest {
                 }
             } else if (Objects.equals(card.getType(), "Event") && card.getValue() == 2) {
                 int oldSize = adventureDeck.getSize();
-                currentPlayer.draw(adventureDeck);
-                currentPlayer.draw(adventureDeck);
+                currentPlayer.draw(adventureDeck, scanner);
+                currentPlayer.draw(adventureDeck, scanner);
                 assertEquals(2, oldSize - adventureDeck.getSize());
             } else if (Objects.equals(card.getType(), "Event") && card.getValue() == 3) {
                 int oldSize = adventureDeck.getSize();
                 for (Player player : players) {
-                    player.draw(adventureDeck);
-                    player.draw(adventureDeck);
+                    player.draw(adventureDeck, scanner);
+                    player.draw(adventureDeck, scanner);
                 }
                 assertEquals(8, oldSize - adventureDeck.getSize());
             }
@@ -218,10 +219,12 @@ class MainTest {
     public void RESP_6_test_1() {
         AdventureDeck adventureDeck = new AdventureDeck();
         Player player = new Player(1);
+        String simulatedInput = "\n1\n";
+        Scanner scanner = new Scanner(simulatedInput);
         for(int i = 0; i < 12; i++){
-            player.draw(adventureDeck);
+            player.draw(adventureDeck, scanner);
         }
-        player.draw(adventureDeck); //Player hand should be full and trimmed functionality handled in draw function
+        player.draw(adventureDeck, scanner); //Player hand should be full and trimmed functionality handled in draw function
         assertEquals(12, player.hand.size());
         assertEquals(1, adventureDeck.getDiscardSize());
     }
