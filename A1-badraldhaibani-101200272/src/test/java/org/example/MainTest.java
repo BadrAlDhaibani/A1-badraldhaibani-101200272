@@ -199,17 +199,17 @@ class MainTest {
                     assertEquals(3, currentPlayer.shields);
                 }
             } else if (Objects.equals(card.getType(), "Event") && card.getValue() == 2) {
-                int oldSize = adventureDeck.getDiscardSize();
+                int oldSize = adventureDeck.getSize();
                 currentPlayer.draw(adventureDeck);
                 currentPlayer.draw(adventureDeck);
-                assertEquals(2, adventureDeck.getDiscardSize() - oldSize);
+                assertEquals(2, oldSize - adventureDeck.getSize());
             } else if (Objects.equals(card.getType(), "Event") && card.getValue() == 3) {
-                int oldSize = adventureDeck.getDiscardSize();
+                int oldSize = adventureDeck.getSize();
                 for (Player player : players) {
                     player.draw(adventureDeck);
                     player.draw(adventureDeck);
                 }
-                assertEquals(8, adventureDeck.getDiscardSize() - oldSize);
+                assertEquals(8, oldSize - adventureDeck.getSize());
             }
         }
     }

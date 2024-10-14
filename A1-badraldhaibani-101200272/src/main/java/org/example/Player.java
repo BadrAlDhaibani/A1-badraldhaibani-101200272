@@ -11,4 +11,12 @@ public class Player {
         hand = new ArrayList<>();
         this.number = number;
     }
+    public void draw(AdventureDeck adventureDeck){
+        if (adventureDeck.getSize() == 0){
+            adventureDeck.cards.addAll(adventureDeck.discards);
+            adventureDeck.shuffleDeck();
+        }
+        Card drawnCard = adventureDeck.cards.removeFirst();
+        this.hand.add(drawnCard);
+    }
 }
