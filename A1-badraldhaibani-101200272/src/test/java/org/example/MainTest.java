@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 import java.io.InputStream;
 import java.io.ByteArrayInputStream;
@@ -171,6 +172,45 @@ class MainTest {
             System.out.println("Drawn "+eventDrawn.getType().charAt(0)+eventDrawn.getValue());
             assertEquals(1, oldCardsSize - eventDeck.cards.size()); //card drawn from event deck
             assertEquals(1, eventDeck.discards.size() - oldDiscardSize); //card added to discard
+        }
+    }
+
+    @Test
+    public void RESP_5_test_1() {
+        List<Player> players = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            players.add(new Player(i + 1));
+        }
+        List<Card> cards = new ArrayList<>();
+        cards.add(new Card("Event", 1)); //Plague
+        cards.add(new Card("Event", 2)); //Queen's favor
+        cards.add(new Card("Event", 3)); //Prosperity
+        Player currentPlayer = players.getFirst();
+        AdventureDeck adventureDeck = new AdventureDeck();
+        for (Card card : cards) {
+            if (Objects.equals(card.getType(), "Event") && card.getValue() == 1) {
+                if (currentPlayer.shields <= 2) {
+                    currentPlayer.shields = 0;
+                    assertEquals(0, currentPlayer.shields);
+                }
+                currentPlayer.shields = 5; //test input
+                if (currentPlayer.shields > 2) {
+                    currentPlayer.shields -= 2;
+                    assertEquals(3, currentPlayer.shields);
+                }
+            } else if (Objects.equals(card.getType(), "Event") && card.getValue() == 2) {
+                int oldSize = adventureDeck.getDiscardSize();
+                currentPlayer.draw(adventureDeck);
+                currentPlayer.draw(adventureDeck);
+                assertEquals(2, adventureDeck.getDiscardSize() - oldSize);
+            } else if (Objects.equals(card.getType(), "Event") && card.getValue() == 3) {
+                int oldSize = adventureDeck.getDiscardSize();
+                for (Player player : players) {
+                    player.draw(adventureDeck);
+                    player.draw(adventureDeck);
+                }
+                assertEquals(8, adventureDeck.getDiscardSize() - oldSize);
+            }
         }
     }
 }
