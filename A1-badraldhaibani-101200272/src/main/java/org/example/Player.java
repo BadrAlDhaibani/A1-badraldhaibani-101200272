@@ -1,9 +1,6 @@
 package org.example;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Player {
     public List<Card> hand;
@@ -130,9 +127,23 @@ public class Player {
                 if (stageCards.isEmpty()){
                     System.out.println("A stage cannot be empty");
                 }
+                else if(!isValidStage(stageCards)){
+                    System.out.println("Invalid stage, must have exactly one Foe card and no repeated Weapon cards.");
+                    hand.addAll(stageCards);
+                    stageCards.clear();
+                }
                 else {
-                    System.out.println("Stage building ended.");
-                    buildingStage = false;
+                    int previousStageValue = quest.isEmpty() ? 0 : calculateStageValue(quest.getLast());
+                    int currentStageValue = calculateStageValue(stageCards);
+                    if(currentStageValue <= previousStageValue){
+                        System.out.println("Insufficient value for this stage");
+                        hand.addAll(stageCards);
+                        stageCards.clear();
+                    }
+                    else{
+                        System.out.println("Stage building ended.");
+                        buildingStage = false;
+                    }
                 }
             }
             else{
@@ -164,6 +175,31 @@ public class Player {
             }
             stageNum++;
         }
+    }
+
+    public int calculateStageValue(List<Card> stageCards){
+        int totalValue = 0;
+        for(Card card : stageCards){
+            totalValue += card.getValue();
+        }
+        return totalValue;
+    }
+
+    public boolean isValidStage(List<Card> stageCards){
+        int foeCount = 0;
+        Set<String> weaponsUsed = new HashSet<>();
+        for(Card card : stageCards){
+            if (card.getType().equals("Foe")){
+                foeCount++;
+            }
+            else if (card.getType().equals("Weapon")){
+                if (weaponsUsed.contains(card.getLabel())){
+                    return false;
+                }
+                weaponsUsed.add(card.getLabel());
+            }
+        }
+        return foeCount == 1;
     }
 
 }

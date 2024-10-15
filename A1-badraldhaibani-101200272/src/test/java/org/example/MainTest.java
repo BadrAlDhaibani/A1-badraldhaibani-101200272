@@ -353,9 +353,8 @@ class MainTest {
     @Test
     public void RESP_12_test_1() {
         Player sponsor = new Player(1);
-        AdventureDeck adventureDeck = new AdventureDeck();
 
-        String simulatedInput = "1\nq\n";  // Select card and quit
+        String simulatedInput = "1\nq\n1\n2\nq";
         InputStream inputStream = new ByteArrayInputStream(simulatedInput.getBytes());
         Scanner scanner = new Scanner(inputStream);
 
@@ -363,13 +362,13 @@ class MainTest {
         PrintStream originalOut = System.out;
         System.setOut(new PrintStream(outputStream));
 
-        for (int i = 0; i < 12; i++) {
-            sponsor.draw(adventureDeck, scanner);
-        }
+        sponsor.hand.add(new Card("Foe",5));
+        sponsor.hand.add(new Card("Weapon",10, "Sword"));
+        sponsor.hand.add(new Card("Weapon",30, "Excalibur"));
 
         List<Card> previousStage = new ArrayList<>();
         previousStage.add(new Card("Foe", 10));
-        previousStage.add(new Card("Weapon", 10, "Sword")); // Lance (15)
+        previousStage.add(new Card("Weapon", 10, "Sword"));
         List<List<Card>> quest = new ArrayList<>();
         quest.add(previousStage);
 
