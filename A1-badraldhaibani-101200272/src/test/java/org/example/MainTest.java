@@ -388,4 +388,31 @@ class MainTest {
         assertTrue(gameOutput.contains("Insufficient value for this stage"));
 
     }
+
+    @Test
+    public void RESP_13_test_1() {
+        Player sponsor = new Player(1);
+        String simulatedInput = "1\n2\nq\n1\n1\nq\n";
+        InputStream inputStream = new ByteArrayInputStream(simulatedInput.getBytes());
+        Scanner scanner = new Scanner(inputStream);
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PrintStream originalOut = System.out;
+        System.setOut(new PrintStream(outputStream));
+
+        sponsor.hand.add(new Card("Foe",5));
+        sponsor.hand.add(new Card("Foe",10));
+        sponsor.hand.add(new Card("Weapon",10, "Sword"));
+        sponsor.hand.add(new Card("Weapon",30, "Excalibur"));
+
+        List<List<Card>> quest = new ArrayList<>();
+        for(int i = 0; i < 2; i++){ //making two stages
+            quest.add(sponsor.buildStage(quest, scanner));
+        }
+        sponsor.printQuest(quest);
+        System.setOut(originalOut);
+        String gameOutput = outputStream.toString();
+        assertTrue(gameOutput.contains("Stage 1"));
+        assertTrue(gameOutput.contains("Stage 2"));
+    }
 }
