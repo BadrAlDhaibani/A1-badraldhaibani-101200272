@@ -29,27 +29,31 @@ public class Player {
             else{
                 System.out.println("Drawn card: "+drawnCard.getType().charAt(0)+drawnCard.getValue());
             }
-            System.out.print("Please select the position of the card you'd like to discard or type 'q': ");
-            String input = scanner.nextLine();
-            if(input.equalsIgnoreCase("q")){
-                System.out.println("Canceled, no cards discarded.");
-                adventureDeck.discards.add(drawnCard);
-                return;
-            }
-            try{
-                int position = Integer.parseInt(input) - 1;
-                if (position >= 0 && position < this.hand.size()){
-                    Card discardedCard = this.hand.remove(position);
-                    adventureDeck.discards.add(discardedCard);
-                    System.out.println("Discarded: "+discardedCard.getLabel()+" (Value: "+discardedCard.getValue()+")");
-                    this.hand.add(drawnCard);
-                    displayHand();
+            boolean validInput = false;
+            while(!validInput){
+                System.out.print("Please select the position of the card you'd like to discard or type 'q': ");
+                String input = scanner.nextLine();
+                if(input.equalsIgnoreCase("q")){
+                    System.out.println("Canceled, no cards discarded.");
+                    adventureDeck.discards.add(drawnCard);
+                    return;
                 }
-                else {
-                    System.out.println("Invalid position, please enter enter a valid card index");
+                try{
+                    int position = Integer.parseInt(input) - 1;
+                    if (position >= 0 && position < this.hand.size()){
+                        Card discardedCard = this.hand.remove(position);
+                        adventureDeck.discards.add(discardedCard);
+                        System.out.println("Discarded: "+discardedCard.getLabel()+" (Value: "+discardedCard.getValue()+")");
+                        this.hand.add(drawnCard);
+                        displayHand();
+                        validInput = true;
+                    }
+                    else {
+                        System.out.println("Invalid position, please enter enter a valid card index");
+                    }
+                } catch (NumberFormatException e){
+                    System.out.println("Invalid input, please enter a valid number");
                 }
-            } catch (NumberFormatException e){
-                System.out.println("Invalid input, please enter a valid number");
             }
         }
         else{
