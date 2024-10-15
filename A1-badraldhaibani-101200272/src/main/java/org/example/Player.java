@@ -221,9 +221,6 @@ public class Player {
     }
 
     public void stageStart(AdventureDeck adventureDeck, List<Card> stage, List<Player> questParticipants, Scanner scanner){
-        for(Card card : stage){
-            System.out.println(card.toString());
-        }
         List<Player> playersToRemove = new ArrayList<>();
         for(Player player : questParticipants){
             System.out.print("P"+player.number+", would you like to withdraw (w) from the quest or tackle (t) the current stage? (w/t): ");
@@ -245,10 +242,14 @@ public class Player {
     public List<Card> prepareAttack(List<Card> stage, Scanner scanner){
         List<Card> attack = new ArrayList<>();
         Set<String> usedWeapons = new HashSet<>();
-        System.out.println("Prepare your attack. Select weapon cards (enter the position of the card) or type 'q' to finish");
         boolean preparing = true;
         while(preparing){
             displayHand();
+            System.out.println("---------------Current Attack---------------");
+            for(Card card : attack){
+                System.out.println(card.toString());
+            }
+            System.out.print("Prepare your attack. Select weapon cards (enter the position of the card) or type 'q' to finish: ");
             String input = scanner.nextLine();
             if (input.equalsIgnoreCase("q")){
                 preparing = false;
@@ -257,7 +258,7 @@ public class Player {
                 try{
                     int position = Integer.parseInt(input) - 1;
                     if(position >= 0  && position < hand.size()) {
-                        Card selectedCard = hand.get(position);
+                        Card selectedCard = hand.remove(position);
                         if(selectedCard.getType().equals("Weapon") && !usedWeapons.contains(selectedCard.getLabel())){
                             attack.add(selectedCard);
                             usedWeapons.add(selectedCard.getLabel());
@@ -265,6 +266,9 @@ public class Player {
                         }
                         else{
                             System.out.println("Invalid choice or repeated weapon. Please select a different weapon.");
+                            hand.add(selectedCard);
+                            hand.addAll(attack);
+                            usedWeapons.clear();
                             attack.clear();
                         }
                     }
