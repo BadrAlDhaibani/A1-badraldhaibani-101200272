@@ -224,7 +224,6 @@ public class Player {
         for(Card card : stage){
             System.out.println(card.toString());
         }
-        System.out.println("------------------------------");
         List<Player> playersToRemove = new ArrayList<>();
         for(Player player : questParticipants){
             System.out.print("P"+player.number+", would you like to withdraw (w) from the quest or tackle (t) the current stage? (w/t): ");
@@ -237,5 +236,8 @@ public class Player {
             }
         }
         questParticipants.removeAll(playersToRemove);
+        if(questParticipants.isEmpty()){
+            System.out.println("End of Quest");
+        }
     }
 }

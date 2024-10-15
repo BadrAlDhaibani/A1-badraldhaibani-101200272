@@ -73,13 +73,18 @@ public class Main {
                     if(!participants.isEmpty()){
                         int stageNum = 1;
                         for(List<Card> stage : quest){
-                            System.out.println("---------------Stage "+stageNum+"---------------");
-                            sponsor.stageStart(adventureDeck, stage, participants, scanner);
-                            stageNum++;
+                            if(!participants.isEmpty()){
+                                System.out.println("---------------Stage "+stageNum+"---------------");
+                                sponsor.stageStart(adventureDeck, stage, participants, scanner);
+                                stageNum++;
+                            }
+                            else{
+                                break;
+                            }
                         }
                     }
                     else{
-                        System.out.println("No Quest Participants...");
+                        System.out.println("No participants found... end of quest");
                     }
                 }
             }
