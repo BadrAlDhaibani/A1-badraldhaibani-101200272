@@ -432,7 +432,7 @@ class MainTest {
 
     @Test
     public void RESP_15_test_1() {
-        String simulatedInput = "t\nw\nt\nw\nt\nt\n";
+        String simulatedInput = "t\nq\nw\nt\nq\nw\nt\nq\nt\nq\n";
         InputStream inputStream = new ByteArrayInputStream(simulatedInput.getBytes());
         Scanner scanner = new Scanner(inputStream);
 
@@ -456,7 +456,7 @@ class MainTest {
 
     @Test
     public void RESP_16_test_1() {
-        String simulatedInput = "t\n";
+        String simulatedInput = "t\nq\n";
         InputStream inputStream = new ByteArrayInputStream(simulatedInput.getBytes());
         Scanner scanner = new Scanner(inputStream);
 
@@ -495,7 +495,7 @@ class MainTest {
 
     @Test
     public void RESP_18_test_1() {
-        String simulatedInput = "1\nq\n2\nq\n3\nq\n";  // Selecting cards for attack
+        String simulatedInput = "1\n2\n2\n3\nq\n";  // Selecting cards for attack
         InputStream inputStream = new ByteArrayInputStream(simulatedInput.getBytes());
         Scanner scanner = new Scanner(inputStream);
 
