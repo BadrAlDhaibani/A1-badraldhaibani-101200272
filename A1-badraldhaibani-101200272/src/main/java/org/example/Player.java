@@ -100,4 +100,18 @@ public class Player {
         }
     }
 
+    public Player sponsor(List<Player> players, Scanner scanner) {
+        for (int i = 0; i < players.size(); i++) {
+            Player pask = players.get(((number-1) + i) % players.size());
+            System.out.print("P" + pask.number + ", would you like to sponsor the quest? (y/n): ");
+            String response = scanner.nextLine();
+            if (response.equals("y")) {
+                System.out.println("P" + pask.number + " is sponsoring the quest");
+                return pask;
+            }
+        }
+        System.out.println("All players declined to sponsor the quest.");
+        return null;
+    }
+
 }

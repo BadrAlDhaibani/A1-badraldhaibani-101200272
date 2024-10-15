@@ -60,6 +60,9 @@ public class Main {
                     }
                 }
             }
+            else{
+                currentPlayer.sponsor(players, scanner);
+            }
             players.get(playerTurn).shields += 1; //example to finish loop
             //Check for winner
             for(Player player : players){
