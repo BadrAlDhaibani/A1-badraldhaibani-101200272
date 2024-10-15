@@ -495,7 +495,11 @@ class MainTest {
 
     @Test
     public void RESP_18_test_1() {
-        String simulatedInput = "1\n2\n2\n3\nq\n";  // Selecting cards for attack
+        String simulatedInput = "1\n" +
+                                "2\n" +
+                                "1\n" +
+                                "3\n" +
+                                "q\n";  // Selecting cards for attack
         InputStream inputStream = new ByteArrayInputStream(simulatedInput.getBytes());
         Scanner scanner = new Scanner(inputStream);
 
