@@ -432,7 +432,7 @@ class MainTest {
 
     @Test
     public void RESP_15_test_1() {
-        String simulatedInput = "y\nn\ny\nn\ny\ny\n";
+        String simulatedInput = "t\nw\nt\nw\nt\nt\n";
         InputStream inputStream = new ByteArrayInputStream(simulatedInput.getBytes());
         Scanner scanner = new Scanner(inputStream);
 
@@ -450,6 +450,7 @@ class MainTest {
             sponsor.stageStart(stage, questParticipants, scanner);
         }
         assertEquals(1,questParticipants.size());
+        assertEquals(4, questParticipants.get(0).number); //Player 4 should be the last remaining player
     }
 
 }
