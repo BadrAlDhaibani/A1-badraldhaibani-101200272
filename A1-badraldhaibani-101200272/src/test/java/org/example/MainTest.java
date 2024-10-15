@@ -266,10 +266,19 @@ class MainTest {
         for(int i = 0; i < 12; i++){
             sponsor.draw(adventureDeck, scanner);
         }
-        sponsor.buildStage(quest, scanner);
-        System.setOut(originalOut);
-        String gameOutput = outputStream.toString();
-        assertTrue(gameOutput.contains("Select position of the card to include in stage or type 'q' to quit building: "));
+
+        Thread buildStageThread = new Thread(()->{
+            sponsor.buildStage(quest, scanner);
+        });
+        buildStageThread.start();
+        while(true){
+            String gameOutput = outputStream.toString();
+            if(gameOutput.contains("Select position of the card to include in stage or type 'q' to quit building: ")) {
+                System.setOut(originalOut);
+                assertTrue(true);
+                return;
+            }
+        }
     }
 
     @Test
