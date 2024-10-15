@@ -63,9 +63,11 @@ public class Main {
             else{
                 Player sponsor = currentPlayer.sponsor(players, scanner);
                 List<List<Card>> quest = new ArrayList<>();
+
                 for(int i = 0; i < eventDrawn.getValue(); i++){
                     quest.add(sponsor.buildStage(quest, scanner));
                 }
+                sponsor.printQuest(quest);
 
             }
             players.get(playerTurn).shields += 1; //example to finish loop
