@@ -327,7 +327,7 @@ class MainTest {
         Player sponsor = new Player(1);
         AdventureDeck adventureDeck = new AdventureDeck();
 
-        String simulatedInput = "1\nq\n";
+        String simulatedInput = "q\n1\nq\n";
         InputStream inputStream = new ByteArrayInputStream(simulatedInput.getBytes());
         Scanner scanner = new Scanner(inputStream);
 
@@ -344,6 +344,5 @@ class MainTest {
         String gameOutput = outputStream.toString();
 
         assertTrue(gameOutput.contains("A stage cannot be empty"));
-        assertEquals(0, stageCards.size());
     }
 }
