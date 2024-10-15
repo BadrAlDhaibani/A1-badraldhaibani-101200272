@@ -2,12 +2,15 @@ package org.example;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
+
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 import java.io.InputStream;
 import java.io.ByteArrayInputStream;
+import java.io.PrintStream;
 
 class MainTest {
     @Test
@@ -245,5 +248,26 @@ class MainTest {
 
         Player sponsor = currentPlayer.sponsor(players, scanner);
         assertNull(sponsor);
+    }
+
+    @Test
+    public void RESP_8_test_1() {
+        Player sponsor = new Player(1);
+        AdventureDeck adventureDeck = new AdventureDeck();
+        String simulatedInput = "q";
+        InputStream inputStream = new ByteArrayInputStream(simulatedInput.getBytes());
+        Scanner scanner = new Scanner(inputStream);
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PrintStream originalOut = System.out;
+        System.setOut(new PrintStream(outputStream));
+
+        for(int i = 0; i < 12; i++){
+            sponsor.draw(adventureDeck, scanner);
+        }
+        sponsor.buildStage(scanner);
+        System.setOut(originalOut);
+        String gameOutput = outputStream.toString();
+        assertTrue(gameOutput.contains("Select position of the card to include in stage or type 'q' to quit building: "));
     }
 }
