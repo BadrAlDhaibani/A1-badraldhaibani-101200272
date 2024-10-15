@@ -120,6 +120,10 @@ public class Player {
 
         while(buildingStage){
             displayHand();
+            System.out.println("Current Stage:");
+            for(Card card : stageCards){
+                System.out.println(card.toString());
+            }
             System.out.print("Select position of the card to include in stage or type 'q' to quit building: ");
             String input = scanner.nextLine();
 
@@ -131,6 +135,8 @@ public class Player {
                 try {
                     int position = Integer.parseInt(input) - 1;
                     if (position >= 0 && position < hand.size()){
+                        Card cardToAdd = hand.remove(position);
+                        stageCards.add(cardToAdd);
                         System.out.println("Card added to stage:");
                     }
                     else {
@@ -142,7 +148,7 @@ public class Player {
                 }
             }
         }
-        return null;
+        return stageCards;
     }
 
 }
