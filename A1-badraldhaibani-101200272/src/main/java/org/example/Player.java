@@ -202,4 +202,22 @@ public class Player {
         return foeCount == 1;
     }
 
+    public List<Player> getParticipants(List<Player> players, Scanner scanner){
+        List<Player> participants = new ArrayList<>();
+        for(Player player : players){
+            if(player != this){
+                System.out.print("P"+player.number+", do you want to participate in the quest? (y/n): ");
+                String input = scanner.nextLine();
+                if(input.equalsIgnoreCase("y")){
+                    participants.add(player);
+                    System.out.println("P"+player.number+" is participating in the quest");
+                }
+                else{
+                    System.out.println("P"+player.number+" has declined to participate");
+                }
+            }
+        }
+        return participants;
+    }
+
 }

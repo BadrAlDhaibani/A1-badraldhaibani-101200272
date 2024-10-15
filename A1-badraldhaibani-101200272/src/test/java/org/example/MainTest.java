@@ -427,6 +427,7 @@ class MainTest {
         }
         Player sponsor = players.get(0);
         List<Player> questParticipants = sponsor.getParticipants(players, scanner);
+        assertEquals(2, questParticipants.size());
     }
 
 }
