@@ -436,6 +436,7 @@ class MainTest {
         InputStream inputStream = new ByteArrayInputStream(simulatedInput.getBytes());
         Scanner scanner = new Scanner(inputStream);
 
+        AdventureDeck adventureDeck = new AdventureDeck();
         Player sponsor = new Player(1); //assume first player is sponsor
         List<Player> questParticipants = new ArrayList<>();
         for (int i = 1; i < 4; i++) {
@@ -447,10 +448,26 @@ class MainTest {
             quest.add(stage);
         }
         for(List<Card> stage : quest){
-            sponsor.stageStart(stage, questParticipants, scanner);
+            sponsor.stageStart(adventureDeck, stage, questParticipants, scanner);
         }
         assertEquals(1,questParticipants.size());
         assertEquals(4, questParticipants.get(0).number); //Player 4 should be the last remaining player
     }
 
+    @Test
+    public void RESP_16_test_1() {
+        String simulatedInput = "t\n";
+        InputStream inputStream = new ByteArrayInputStream(simulatedInput.getBytes());
+        Scanner scanner = new Scanner(inputStream);
+
+        AdventureDeck adventureDeck = new AdventureDeck();
+        Player sponsor = new Player(1); //assume first player is sponsor
+        List<Player> questParticipants = new ArrayList<>();
+        questParticipants.add(new Player(2));
+
+        List<Card> stage = new ArrayList<>();
+        sponsor.stageStart(adventureDeck, stage, questParticipants, scanner);
+
+        assertEquals(1,questParticipants.getFirst().hand.size()); //card drawn and hand was empty so expecting 1 card
+    }
 }
