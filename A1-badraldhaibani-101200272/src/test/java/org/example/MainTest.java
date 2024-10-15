@@ -430,4 +430,26 @@ class MainTest {
         assertEquals(2, questParticipants.size());
     }
 
+    @Test
+    public void RESP_15_test_1() {
+        String simulatedInput = "y\nn\ny\nn\ny\ny\n";
+        InputStream inputStream = new ByteArrayInputStream(simulatedInput.getBytes());
+        Scanner scanner = new Scanner(inputStream);
+
+        Player sponsor = new Player(1); //assume first player is sponsor
+        List<Player> questParticipants = new ArrayList<>();
+        for (int i = 1; i < 4; i++) {
+            questParticipants.add(new Player(i + 1));
+        }
+        List<List<Card>> quest = new ArrayList<>();
+        for(int i = 0; i < 3; i++){
+            List<Card> stage = new ArrayList<>();
+            quest.add(stage);
+        }
+        for(List<Card> stage : quest){
+            sponsor.stageStart(stage, questParticipants, scanner);
+        }
+        assertEquals(1,questParticipants.size());
+    }
+
 }
