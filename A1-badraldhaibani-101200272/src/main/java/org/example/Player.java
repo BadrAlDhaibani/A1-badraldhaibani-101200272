@@ -128,8 +128,13 @@ public class Player {
             String input = scanner.nextLine();
 
             if(input.equals("q")){
-                System.out.println("Stage building ended.");
-                buildingStage = false;
+                if (stageCards.isEmpty()){
+                    System.out.println("A stage cannot be empty");
+                }
+                else {
+                    System.out.println("Stage building ended.");
+                    buildingStage = false;
+                }
             }
             else{
                 try {
