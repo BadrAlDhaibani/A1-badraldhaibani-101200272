@@ -512,4 +512,43 @@ class MainTest {
 
         assertEquals(1,attack.size());
     }
+
+    @Test
+    public void RESP_19_test_1() {
+        String simulatedInput = "2\n" +
+                                "2\n" +
+                                "1\n" +
+                                "2\n" +
+                                "2\n" +
+                                "abc\n" +
+                                "q\n";
+        InputStream inputStream = new ByteArrayInputStream(simulatedInput.getBytes());
+        Scanner scanner = new Scanner(inputStream);
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PrintStream originalOut = System.out;
+        System.setOut(new PrintStream(outputStream));
+
+        Player player = new Player(1);
+        player.hand.add(new Card("Foe", 5));  // Foe card (not selectable)
+        player.hand.add(new Card("Weapon", 5, "Dagger"));  // Weapon 1
+        player.hand.add(new Card("Weapon", 30, "Excalibur"));  // Weapon 2
+
+        List<Card> stage = new ArrayList<>();
+
+        List<Card> attack = player.prepareAttack(stage, scanner);
+
+        System.setOut(originalOut);
+
+        String gameOutput = outputStream.toString();
+
+        assertEquals(2, attack.size());
+        assertEquals("Dagger", attack.get(0).getLabel());
+        assertEquals("Excalibur", attack.get(1).getLabel());
+
+        assertTrue(gameOutput.contains("Added Dagger (Value: 5) to your attack."));
+        assertTrue(gameOutput.contains("Added Excalibur (Value: 30) to your attack."));
+        assertTrue(gameOutput.contains("Invalid choice or repeated weapon. Please select a different weapon."));
+        assertTrue(gameOutput.contains("Invalid input. Please enter a number."));
+    }
 }
