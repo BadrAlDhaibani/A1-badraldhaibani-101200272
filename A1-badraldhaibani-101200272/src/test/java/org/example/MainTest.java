@@ -415,4 +415,18 @@ class MainTest {
         assertTrue(gameOutput.contains("Stage 1"));
         assertTrue(gameOutput.contains("Stage 2"));
     }
+
+    @Test
+    public void RESP_14_test_1() {
+        List<Player> players = new ArrayList<>();
+        String simulatedInput = "y\nn\ny\n";
+        InputStream inputStream = new ByteArrayInputStream(simulatedInput.getBytes());
+        Scanner scanner = new Scanner(inputStream);
+        for (int i = 0; i < 4; i++) {
+            players.add(new Player(i + 1));
+        }
+        Player sponsor = players.get(0);
+        List<Player> questParticipants = sponsor.getParticipants(players, scanner);
+    }
+
 }
