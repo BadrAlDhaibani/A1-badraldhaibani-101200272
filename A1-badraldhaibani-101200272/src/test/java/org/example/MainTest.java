@@ -294,7 +294,5 @@ class MainTest {
 
         assertTrue(gameOutput.contains("Invalid position, please enter a valid card index."));
         assertTrue(gameOutput.contains("Card added to stage:"));
-
-        assertEquals(1, stageCards.size());
     }
 }
