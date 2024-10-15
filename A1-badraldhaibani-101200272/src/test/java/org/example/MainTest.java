@@ -349,4 +349,35 @@ class MainTest {
 
         assertTrue(gameOutput.contains("A stage cannot be empty"));
     }
+
+    @Test
+    public void RESP_12_test_1() {
+        Player sponsor = new Player(1);
+        AdventureDeck adventureDeck = new AdventureDeck();
+
+        String simulatedInput = "1\nq\n";  // Select card and quit
+        InputStream inputStream = new ByteArrayInputStream(simulatedInput.getBytes());
+        Scanner scanner = new Scanner(inputStream);
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PrintStream originalOut = System.out;
+        System.setOut(new PrintStream(outputStream));
+
+        for (int i = 0; i < 12; i++) {
+            sponsor.draw(adventureDeck, scanner);
+        }
+
+        List<Card> previousStage = new ArrayList<>();
+        previousStage.add(new Card("Foe", 10));
+        previousStage.add(new Card("Weapon", 10, "Sword")); // Lance (15)
+        List<List<Card>> quest = new ArrayList<>();
+        quest.add(previousStage);
+
+        List<Card> stageCards = sponsor.buildStage(quest, scanner);
+
+        System.setOut(originalOut);
+        String gameOutput = outputStream.toString();
+        assertTrue(gameOutput.contains("Insufficient value for this stage"));
+
+    }
 }
