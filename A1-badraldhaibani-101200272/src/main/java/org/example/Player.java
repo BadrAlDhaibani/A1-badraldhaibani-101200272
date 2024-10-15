@@ -233,11 +233,50 @@ public class Player {
             }
             else{
                 player.draw(adventureDeck, scanner);
+                List<Card> attack = player.prepareAttack(stage, scanner);
             }
         }
         questParticipants.removeAll(playersToRemove);
         if(questParticipants.isEmpty()){
             System.out.println("End of Quest");
         }
+    }
+
+    public List<Card> prepareAttack(List<Card> stage, Scanner scanner){
+        List<Card> attack = new ArrayList<>();
+        Set<String> usedWeapons = new HashSet<>();
+        System.out.println("Prepare your attack. Select weapon cards (enter the position of the card) or type 'q' to finish");
+        boolean preparing = true;
+        while(preparing){
+            displayHand();
+            String input = scanner.nextLine();
+            if (input.equalsIgnoreCase("q")){
+                preparing = false;
+            }
+            else{
+                try{
+                    int position = Integer.parseInt(input) - 1;
+                    if(position >= 0  && position < hand.size()) {
+                        Card selectedCard = hand.get(position);
+                        if(selectedCard.getType().equals("Weapon") && !usedWeapons.contains(selectedCard.getLabel())){
+                            attack.add(selectedCard);
+                            usedWeapons.add(selectedCard.getLabel());
+                            System.out.println("Added "+selectedCard.getLabel()+" (Value: "+selectedCard.getValue()+") to your attack.");
+                        }
+                        else{
+                            System.out.println("Invalid choice or repeated weapon. Please select a different weapon.");
+                            attack.clear();
+                        }
+                    }
+                    else{
+                        System.out.println("Invalid position. Please select a valid card index.");
+                    }
+                }
+                catch (NumberFormatException e) {
+                    System.out.println("Invalid input. Please enter a number.");
+                }
+            }
+        }
+        return attack;
     }
 }
