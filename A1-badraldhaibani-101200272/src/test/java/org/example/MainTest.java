@@ -470,4 +470,26 @@ class MainTest {
 
         assertEquals(1,questParticipants.getFirst().hand.size()); //card drawn and hand was empty so expecting 1 card
     }
+
+    @Test
+    public void RESP_17_test_1() {
+        String simulatedInput = "w\n";
+        InputStream inputStream = new ByteArrayInputStream(simulatedInput.getBytes());
+        Scanner scanner = new Scanner(inputStream);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PrintStream originalOut = System.out;
+        System.setOut(new PrintStream(outputStream));
+
+        AdventureDeck adventureDeck = new AdventureDeck();
+        Player sponsor = new Player(1); //assume first player is sponsor
+        List<Player> questParticipants = new ArrayList<>();
+        questParticipants.add(new Player(2));
+
+        List<Card> stage = new ArrayList<>();
+        sponsor.stageStart(adventureDeck, stage, questParticipants, scanner);
+
+        System.setOut(originalOut);
+        String gameOutput = outputStream.toString();
+        assertTrue(gameOutput.contains("End of Quest"));
+    }
 }
