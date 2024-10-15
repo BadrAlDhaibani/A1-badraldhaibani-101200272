@@ -555,4 +555,45 @@ class MainTest {
         assertTrue(gameOutput.contains("Invalid choice or repeated weapon. Please select a different weapon."));
         assertTrue(gameOutput.contains("Invalid input. Please enter a number."));
     }
+
+    @Test
+    public void RESP_20_test_1() {
+        String simulatedInput = "t\n" +
+                                "1\n" +
+                                "q\n" +
+                                "t\n" +
+                                "1\n" +
+                                "q\n" +
+                                "t\n" +
+                                "1\n" +
+                                "q\n";
+        InputStream inputStream = new ByteArrayInputStream(simulatedInput.getBytes());
+        Scanner scanner = new Scanner(inputStream);
+
+        Player sponsor = new Player(1);
+        List<Player> players = new ArrayList<>();
+        players.add(new Player(2));
+        players.add(new Player(3));
+        players.add(new Player(4));
+
+        List<Card> stage = new ArrayList<>();
+        stage.add(new Card("Foe", 20));
+
+        players.get(0).hand.add(new Card("Weapon", 15, "Sword"));
+        players.get(0).hand.add(new Card("Weapon", 10, "Horse"));
+        players.get(1).hand.add(new Card("Weapon", 5, "Dagger"));
+        players.get(1).hand.add(new Card("Weapon", 5, "Dagger"));
+        players.get(2).hand.add(new Card("Weapon", 30, "Excalibur"));
+
+        AdventureDeck adventureDeck = new AdventureDeck();
+
+        sponsor.stageStart(adventureDeck, stage, players, scanner);
+
+        assertEquals(2, players.size()); // Only 2 Players should remain
+        assertEquals(2, players.get(0).number); // Player 2 is still in
+        assertEquals(4, players.get(1).number); // Player 4 is still in
+        for(Player player : players){
+            assertEquals(1, player.shields);
+        }
+    }
 }
