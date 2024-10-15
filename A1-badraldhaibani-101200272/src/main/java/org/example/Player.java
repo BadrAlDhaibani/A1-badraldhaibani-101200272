@@ -114,4 +114,11 @@ public class Player {
         return null;
     }
 
+    public List<Card> buildStage(Scanner scanner){
+        displayHand();
+        System.out.print("Select position of the card to include in stage or type 'q' to quit building: ");
+        String input = scanner.nextLine();
+        return null;
+    }
+
 }

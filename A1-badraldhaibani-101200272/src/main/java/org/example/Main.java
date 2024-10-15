@@ -61,7 +61,8 @@ public class Main {
                 }
             }
             else{
-                currentPlayer.sponsor(players, scanner);
+                Player sponsor = currentPlayer.sponsor(players, scanner);
+                sponsor.buildStage(scanner);
             }
             players.get(playerTurn).shields += 1; //example to finish loop
             //Check for winner
