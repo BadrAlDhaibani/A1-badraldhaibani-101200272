@@ -220,7 +220,7 @@ public class Player {
         return participants;
     }
 
-    public void stageStart(List<Card> stage, List<Player> questParticipants, Scanner scanner){
+    public void stageStart(AdventureDeck adventureDeck, List<Card> stage, List<Player> questParticipants, Scanner scanner){
         for(Card card : stage){
             System.out.println(card.toString());
         }
@@ -231,6 +231,9 @@ public class Player {
             String input = scanner.nextLine();
             if(input.equalsIgnoreCase("w")){
                 playersToRemove.add(player);
+            }
+            else{
+                player.draw(adventureDeck, scanner);
             }
         }
         questParticipants.removeAll(playersToRemove);

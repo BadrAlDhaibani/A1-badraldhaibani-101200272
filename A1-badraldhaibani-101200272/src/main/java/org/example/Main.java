@@ -74,7 +74,7 @@ public class Main {
                         int stageNum = 1;
                         for(List<Card> stage : quest){
                             System.out.println("---------------Stage "+stageNum+"---------------");
-                            sponsor.stageStart(stage, participants, scanner);
+                            sponsor.stageStart(adventureDeck, stage, participants, scanner);
                             stageNum++;
                         }
                     }
