@@ -295,4 +295,30 @@ class MainTest {
         assertTrue(gameOutput.contains("Invalid position, please enter a valid card index."));
         assertTrue(gameOutput.contains("Card added to stage:"));
     }
+
+    @Test
+    public void RESP_10_test_1() {
+        Player sponsor = new Player(1);
+        AdventureDeck adventureDeck = new AdventureDeck();
+
+        String simulatedInput = "1\nq\n";
+        InputStream inputStream = new ByteArrayInputStream(simulatedInput.getBytes());
+        Scanner scanner = new Scanner(inputStream);
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PrintStream originalOut = System.out;
+        System.setOut(new PrintStream(outputStream));
+
+        for (int i = 0; i < 12; i++) {
+            sponsor.draw(adventureDeck, scanner);
+        }
+
+        List<Card> stageCards = sponsor.buildStage(scanner);
+
+        System.setOut(originalOut);
+        String gameOutput = outputStream.toString();
+
+        assertTrue(gameOutput.contains("Card added to stage:"));
+        assertEquals(1, stageCards.size());
+    }
 }
