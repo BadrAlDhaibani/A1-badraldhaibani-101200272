@@ -115,9 +115,33 @@ public class Player {
     }
 
     public List<Card> buildStage(Scanner scanner){
-        displayHand();
-        System.out.print("Select position of the card to include in stage or type 'q' to quit building: ");
-        String input = scanner.nextLine();
+        List<Card> stageCards = new ArrayList<>();
+        boolean buildingStage = true;
+
+        while(buildingStage){
+            displayHand();
+            System.out.print("Select position of the card to include in stage or type 'q' to quit building: ");
+            String input = scanner.nextLine();
+
+            if(input.equals("q")){
+                System.out.println("Stage building ended.");
+                buildingStage = false;
+            }
+            else{
+                try {
+                    int position = Integer.parseInt(input) - 1;
+                    if (position >= 0 && position < hand.size()){
+                        System.out.println("Card added to stage:");
+                    }
+                    else {
+                        System.out.println("Invalid position, please enter a valid card index.");
+                    }
+                }
+                catch (NumberFormatException e){
+                    System.out.println("Invalid position, please enter a valid card index.");
+                }
+            }
+        }
         return null;
     }
 
