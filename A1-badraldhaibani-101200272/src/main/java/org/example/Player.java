@@ -117,7 +117,7 @@ public class Player {
         while(buildingStage){
             displayHand();
             printQuest(quest);
-            System.out.println("Current Stage:");
+            System.out.println("---------------Current Stage---------------");
             for(Card card : stageCards){
                 System.out.println(card.toString());
             }
@@ -169,7 +169,7 @@ public class Player {
     public void printQuest(List<List<Card>> quest){
         int stageNum = 1;
         for(List<Card> stage : quest){
-            System.out.println("Stage "+stageNum);
+            System.out.println("---------------Stage "+stageNum+"---------------");
             for(Card card : stage){
                 System.out.println(card.toString());
             }

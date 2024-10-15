@@ -68,6 +68,7 @@ public class Main {
                         quest.add(sponsor.buildStage(quest, scanner));
                     }
                     sponsor.printQuest(quest);
+                    System.out.println("---------------Quest Build Finished---------------");
                 }
             }
             players.get(playerTurn).shields += 1; //example to finish loop
