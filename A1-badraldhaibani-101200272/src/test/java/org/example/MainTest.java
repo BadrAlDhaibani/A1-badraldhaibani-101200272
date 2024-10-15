@@ -492,4 +492,24 @@ class MainTest {
         String gameOutput = outputStream.toString();
         assertTrue(gameOutput.contains("End of Quest"));
     }
+
+    @Test
+    public void RESP_18_test_1() {
+        String simulatedInput = "1\nq\n2\nq\n3\nq\n";  // Selecting cards for attack
+        InputStream inputStream = new ByteArrayInputStream(simulatedInput.getBytes());
+        Scanner scanner = new Scanner(inputStream);
+
+        List<Card> stage = new ArrayList<>();
+        stage.add(new Card("Foe",5));
+        stage.add(new Card("Weapon",15, "Battle-Axe"));
+
+        Player player = new Player(1);
+        player.hand.add(new Card("Foe",5));
+        player.hand.add(new Card("Weapon",5, "Dagger"));
+        player.hand.add(new Card("Weapon",30, "Excalibur"));
+
+        List<Card> attack = player.prepareAttack(stage, scanner);
+
+        assertEquals(1,attack.size());
+    }
 }
