@@ -220,4 +220,19 @@ public class Player {
         return participants;
     }
 
+    public void stageStart(List<Card> stage, List<Player> questParticipants, Scanner scanner){
+        for(Card card : stage){
+            System.out.println(card.toString());
+        }
+        System.out.println("------------------------------");
+        List<Player> playersToRemove = new ArrayList<>();
+        for(Player player : questParticipants){
+            System.out.print("P"+player.number+", would you like to withdraw (w) from the quest or tackle (t) the current stage? (w/t): ");
+            String input = scanner.nextLine();
+            if(input.equalsIgnoreCase("w")){
+                playersToRemove.add(player);
+            }
+        }
+        questParticipants.removeAll(playersToRemove);
+    }
 }

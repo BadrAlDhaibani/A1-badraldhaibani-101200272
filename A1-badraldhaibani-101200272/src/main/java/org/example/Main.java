@@ -70,6 +70,17 @@ public class Main {
                     sponsor.printQuest(quest);
                     System.out.println("---------------Quest Build Finished---------------");
                     List<Player> participants = sponsor.getParticipants(players, scanner);
+                    if(!participants.isEmpty()){
+                        int stageNum = 1;
+                        for(List<Card> stage : quest){
+                            System.out.println("---------------Stage "+stageNum+"---------------");
+                            sponsor.stageStart(stage, participants, scanner);
+                            stageNum++;
+                        }
+                    }
+                    else{
+                        System.out.println("No Quest Participants...");
+                    }
                 }
             }
             players.get(playerTurn).shields += 1; //example to finish loop
