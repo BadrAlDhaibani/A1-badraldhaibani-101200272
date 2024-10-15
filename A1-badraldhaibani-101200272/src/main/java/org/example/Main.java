@@ -62,7 +62,11 @@ public class Main {
             }
             else{
                 Player sponsor = currentPlayer.sponsor(players, scanner);
-                sponsor.buildStage(scanner);
+                List<List<Card>> quest = new ArrayList<>();
+                for(int i = 0; i < eventDrawn.getValue(); i++){
+                    quest.add(sponsor.buildStage(quest, scanner));
+                }
+
             }
             players.get(playerTurn).shields += 1; //example to finish loop
             //Check for winner

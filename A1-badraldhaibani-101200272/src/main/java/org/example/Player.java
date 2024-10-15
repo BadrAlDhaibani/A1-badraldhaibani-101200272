@@ -114,19 +114,18 @@ public class Player {
         return null;
     }
 
-    public List<Card> buildStage(Scanner scanner){
+    public List<Card> buildStage( List<List<Card>> quest, Scanner scanner){
         List<Card> stageCards = new ArrayList<>();
         boolean buildingStage = true;
-
         while(buildingStage){
             displayHand();
+            printQuest(quest);
             System.out.println("Current Stage:");
             for(Card card : stageCards){
                 System.out.println(card.toString());
             }
             System.out.print("Select position of the card to include in stage or type 'q' to quit building: ");
             String input = scanner.nextLine();
-
             if(input.equals("q")){
                 if (stageCards.isEmpty()){
                     System.out.println("A stage cannot be empty");
@@ -154,6 +153,17 @@ public class Player {
             }
         }
         return stageCards;
+    }
+
+    public void printQuest(List<List<Card>> quest){
+        int stageNum = 1;
+        for(List<Card> stage : quest){
+            System.out.println("Stage "+stageNum);
+            for(Card card : stage){
+                System.out.println(card.toString());
+            }
+            stageNum++;
+        }
     }
 
 }

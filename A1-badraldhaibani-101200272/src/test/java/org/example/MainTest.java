@@ -253,6 +253,7 @@ class MainTest {
     @Test
     public void RESP_8_test_1() {
         Player sponsor = new Player(1);
+        List<List<Card>> quest = new ArrayList<>();
         AdventureDeck adventureDeck = new AdventureDeck();
         String simulatedInput = "q";
         InputStream inputStream = new ByteArrayInputStream(simulatedInput.getBytes());
@@ -265,7 +266,7 @@ class MainTest {
         for(int i = 0; i < 12; i++){
             sponsor.draw(adventureDeck, scanner);
         }
-        sponsor.buildStage(scanner);
+        sponsor.buildStage(quest, scanner);
         System.setOut(originalOut);
         String gameOutput = outputStream.toString();
         assertTrue(gameOutput.contains("Select position of the card to include in stage or type 'q' to quit building: "));
@@ -275,6 +276,7 @@ class MainTest {
     public void RESP_9_test_1() {
         Player sponsor = new Player(1);
         AdventureDeck adventureDeck = new AdventureDeck();
+        List<List<Card>> quest = new ArrayList<>();
 
         String simulatedInput = "13\n1\nq\n";
         InputStream inputStream = new ByteArrayInputStream(simulatedInput.getBytes());
@@ -287,7 +289,7 @@ class MainTest {
         for (int i = 0; i < 12; i++) {
             sponsor.draw(adventureDeck, scanner);
         }
-        List<Card> stageCards = sponsor.buildStage(scanner);
+        sponsor.buildStage(quest, scanner);
         System.setOut(originalOut);
 
         String gameOutput = outputStream.toString();
@@ -300,6 +302,7 @@ class MainTest {
     public void RESP_10_test_1() {
         Player sponsor = new Player(1);
         AdventureDeck adventureDeck = new AdventureDeck();
+        List<List<Card>> quest = new ArrayList<>();
 
         String simulatedInput = "1\nq\n";
         InputStream inputStream = new ByteArrayInputStream(simulatedInput.getBytes());
@@ -313,7 +316,7 @@ class MainTest {
             sponsor.draw(adventureDeck, scanner);
         }
 
-        List<Card> stageCards = sponsor.buildStage(scanner);
+        List<Card> stageCards = sponsor.buildStage(quest, scanner);
 
         System.setOut(originalOut);
         String gameOutput = outputStream.toString();
@@ -325,6 +328,7 @@ class MainTest {
     @Test
     public void RESP_11_test_1() {
         Player sponsor = new Player(1);
+        List<List<Card>> quest = new ArrayList<>();
         AdventureDeck adventureDeck = new AdventureDeck();
 
         String simulatedInput = "q\n1\nq\n";
@@ -338,7 +342,7 @@ class MainTest {
         for (int i = 0; i < 12; i++) {
             sponsor.draw(adventureDeck, scanner);
         }
-        List<Card> stageCards = sponsor.buildStage(scanner);
+        sponsor.buildStage(quest, scanner);
 
         System.setOut(originalOut);
         String gameOutput = outputStream.toString();
