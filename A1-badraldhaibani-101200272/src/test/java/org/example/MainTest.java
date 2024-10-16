@@ -674,6 +674,7 @@ class MainTest {
 
         assertEquals(adventureDeck.getDiscardSize()-3, stage.size());
     }
+
     @Test
     public void RESP_23_test_1() {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -713,4 +714,6 @@ class MainTest {
         String gameOutput = outputStream.toString();
         assertTrue(gameOutput.contains("Player 1 with 7 shields."));
     }
+
+
 }

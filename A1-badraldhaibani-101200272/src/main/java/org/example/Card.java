@@ -25,10 +25,13 @@ public class Card {
         return label;
     }
     public String toString() {
+        return getName() + " (Value: " + value + ")";
+    }
+    public String getName() {
         if (label != null) {
-            return label + " (Value: " + value + ")";
+            return label;
         } else {
-            return type.charAt(0) + String.valueOf(value);
+            return String.valueOf(type.charAt(0)) + value;
         }
     }
 }

@@ -307,4 +307,20 @@ public class Player {
     public void printWinner(){
         System.out.println("Player "+number+" with "+shields+" shields.");
     }
+
+    //For A-TEST
+    public void drawSpecificCard(Card card) {
+        this.hand.add(card);
+    }
+
+    public Card playCard(String cardLabel) {
+        for (Iterator<Card> iterator = hand.iterator(); iterator.hasNext();) {
+            Card card = iterator.next();
+            if (card.getName().equals(cardLabel)) {
+                iterator.remove();
+                return card;
+            }
+        }
+        throw new NoSuchElementException("Card not found: " + cardLabel);
+    }
 }
