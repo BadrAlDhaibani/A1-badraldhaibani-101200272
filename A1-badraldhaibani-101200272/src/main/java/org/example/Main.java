@@ -23,6 +23,7 @@ public class Main {
         boolean winnerFlag = false;
         int playerTurn = 0;
         Scanner scanner = new Scanner(System.in);
+        List<Player> winners = new ArrayList<>();
         while (!winnerFlag){
             Player currentPlayer = players.get(playerTurn);
             System.out.print("P"+currentPlayer.number+"'s turn (Press 'Enter' to continue...)");
@@ -94,12 +95,12 @@ public class Main {
                     }
                 }
             }
-            players.get(playerTurn).shields += 1; //example to finish loop
-            //Check for winner
-            for(Player player : players){
-                if (player.shields >= 7){
-                    winnerFlag = true;
-                }
+            // Check if any player has won
+            for (Player player : players) {
+                player.checkIfWinner(winners);
+            }
+            if (!winners.isEmpty()) {
+                winnerFlag = true;
             }
             //Rotate players
             playerTurn++;
@@ -107,5 +108,10 @@ public class Main {
                 playerTurn = 0;
             }
         }
+        System.out.println("Winner(s):");
+        for (Player winner : winners) {
+            winner.printWinner();
+        }
+        System.out.println("Game Over.");
     }
 }

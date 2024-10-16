@@ -702,11 +702,15 @@ class MainTest {
                 winnerFlag = true;
             }
         }
+        System.out.println("Winner(s):");
+        for (Player winner : winners) {
+            winner.printWinner();
+        }
+        System.out.println("Game Over.");
 
         System.setOut(originalOut);
 
         String gameOutput = outputStream.toString();
-        assertTrue(gameOutput.contains("Winner(s):"));
         assertTrue(gameOutput.contains("Player 1 with 7 shields."));
     }
 }

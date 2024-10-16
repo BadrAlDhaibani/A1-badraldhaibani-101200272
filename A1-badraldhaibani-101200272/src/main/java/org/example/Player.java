@@ -297,4 +297,14 @@ public class Player {
         }
         return attack;
     }
+
+    public void checkIfWinner(List<Player> winners){
+        if(this.shields >= 7 && !winners.contains(this)){
+            winners.add(this);
+        }
+    }
+
+    public void printWinner(){
+        System.out.println("Player "+number+" with "+shields+" shields.");
+    }
 }
