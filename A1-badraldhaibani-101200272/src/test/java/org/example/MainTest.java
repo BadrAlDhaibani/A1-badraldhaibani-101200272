@@ -617,7 +617,6 @@ class MainTest {
         stage.add(new Card("Foe", 20)); // Stage value is 20
 
         AdventureDeck adventureDeck = new AdventureDeck();
-        int initialDiscardSize = adventureDeck.getDiscardSize();
 
         players.get(0).hand.add(new Card("Weapon", 15, "Sword"));
 
