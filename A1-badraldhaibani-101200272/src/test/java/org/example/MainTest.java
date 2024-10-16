@@ -637,4 +637,46 @@ class MainTest {
         assertFalse(players.get(1).hand.contains(new Card("Weapon", 5, "Dagger")));  // Dagger should be discarded
         assertFalse(players.get(2).hand.contains(new Card("Weapon", 30, "Excalibur")));  // Excalibur should be discarded
     }
+
+    @Test
+    public void RESP_22_test_1() {
+        String simulatedInput = "1\n" +
+                                "2\n" +
+                                "q\n" +
+                                "1\n" +
+                                "1\n" +
+                                "q\n";
+        InputStream inputStream = new ByteArrayInputStream(simulatedInput.getBytes());
+        Scanner scanner = new Scanner(inputStream);
+
+        Player sponsor = new Player(1);
+        AdventureDeck adventureDeck = new AdventureDeck();
+        int initialDiscardSize = adventureDeck.getDiscardSize();
+
+        sponsor.hand.add(new Card("Foe", 10));
+        sponsor.hand.add(new Card("Foe", 25));
+        sponsor.hand.add(new Card("Weapon", 15, "Sword"));
+        sponsor.hand.add(new Card("Weapon", 20, "Lance"));
+
+        List<List<Card>> quest = new ArrayList<>();
+        List<Card> stage1 = sponsor.buildStage(quest, scanner);
+        List<Card> stage2 = sponsor.buildStage(quest, scanner);
+
+        quest.add(stage1);
+        quest.add(stage2);
+
+        int cardsUsedInQuest = stage1.size() + stage2.size();  // Total cards used: 4
+        int numberOfStages = quest.size();  // Total stages: 2
+
+        assertEquals(initialDiscardSize + cardsUsedInQuest, adventureDeck.getDiscardSize());
+
+        int expectedDrawCount = cardsUsedInQuest + numberOfStages;
+        for (int i = 0; i < expectedDrawCount; i++) {
+            sponsor.draw(adventureDeck, scanner);
+        }
+
+        if (sponsor.hand.size() < 12) {
+            assertEquals(expectedDrawCount, sponsor.hand.size()-cardsUsedInQuest);  // Sponsor should trim their hand to 12 cards
+        }
+    }
 }
