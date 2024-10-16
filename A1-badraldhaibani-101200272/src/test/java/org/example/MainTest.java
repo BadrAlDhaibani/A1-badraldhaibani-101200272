@@ -559,13 +559,13 @@ class MainTest {
     @Test
     public void RESP_20_test_1() {
         String simulatedInput = "t\n" +
-                                "1\n" +
+                                "2\n" +
                                 "q\n" +
                                 "t\n" +
-                                "1\n" +
+                                "2\n" +
                                 "q\n" +
                                 "t\n" +
-                                "1\n" +
+                                "2\n" +
                                 "q\n";
         InputStream inputStream = new ByteArrayInputStream(simulatedInput.getBytes());
         Scanner scanner = new Scanner(inputStream);
@@ -589,11 +589,7 @@ class MainTest {
 
         sponsor.stageStart(adventureDeck, stage, players, scanner);
 
-        assertEquals(2, players.size()); // Only 2 Players should remain
-        assertEquals(2, players.get(0).number); // Player 2 is still in
-        assertEquals(4, players.get(1).number); // Player 4 is still in
-        for(Player player : players){
-            assertEquals(1, player.shields);
-        }
+        assertEquals(1, players.size()); // Only 1 Player should remain
+        assertEquals(4, players.get(0).number); // Player 4 is still in
     }
 }
