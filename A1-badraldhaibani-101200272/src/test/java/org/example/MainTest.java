@@ -512,7 +512,7 @@ class MainTest {
         player.hand.add(new Card("Weapon",5, "Dagger"));
         player.hand.add(new Card("Weapon",30, "Excalibur"));
 
-        List<Card> attack = player.prepareAttack(stage, scanner);
+        List<Card> attack = player.prepareAttack(scanner);
 
         assertEquals(1,attack.size());
     }
@@ -540,7 +540,7 @@ class MainTest {
 
         List<Card> stage = new ArrayList<>();
 
-        List<Card> attack = player.prepareAttack(stage, scanner);
+        List<Card> attack = player.prepareAttack(scanner);
 
         System.setOut(originalOut);
 

@@ -222,6 +222,7 @@ public class Player {
 
     public void stageStart(AdventureDeck adventureDeck, List<Card> stage, List<Player> questParticipants, Scanner scanner){
         List<Player> playersToRemove = new ArrayList<>();
+        int stageValue = calculateStageValue(stage);
         for(Player player : questParticipants){
             System.out.print("P"+player.number+", would you like to withdraw (w) from the quest or tackle (t) the current stage? (w/t): ");
             String input = scanner.nextLine();
@@ -230,16 +231,27 @@ public class Player {
             }
             else{
                 player.draw(adventureDeck, scanner);
-                List<Card> attack = player.prepareAttack(stage, scanner);
+                List<Card> attack = player.prepareAttack(scanner);
+                int attackValue = calculateStageValue(attack);
+                System.out.println("Player "+player.number+" has an attack value of "+attackValue);
+                if(attackValue < stageValue){
+                    playersToRemove.add(player);
+                }
             }
+        }
+        for(Player lostPlayer : playersToRemove){
+            System.out.println("Player "+lostPlayer.number+"'s attack is too weak and they are eliminated.");
         }
         questParticipants.removeAll(playersToRemove);
         if(questParticipants.isEmpty()){
             System.out.println("End of Quest");
         }
+        else{
+            System.out.println("Players proceeding to the next stage: " + questParticipants.size());
+        }
     }
 
-    public List<Card> prepareAttack(List<Card> stage, Scanner scanner){
+    public List<Card> prepareAttack(Scanner scanner){
         List<Card> attack = new ArrayList<>();
         Set<String> usedWeapons = new HashSet<>();
         boolean preparing = true;

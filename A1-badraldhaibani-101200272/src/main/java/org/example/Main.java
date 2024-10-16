@@ -82,6 +82,12 @@ public class Main {
                                 break;
                             }
                         }
+                        if (!participants.isEmpty()) {
+                            for (Player player : participants) {
+                                player.shields += stageNum;
+                                System.out.println("Player " + player.number + " wins and earns "+stageNum+" shields,  making that  "+player.shields+" total");
+                            }
+                        }
                     }
                     else{
                         System.out.println("No participants found... end of quest");
