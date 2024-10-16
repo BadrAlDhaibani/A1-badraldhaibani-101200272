@@ -237,8 +237,6 @@ public class Player {
                 if(attackValue < stageValue){
                     playersToRemove.add(player);
                 }
-                adventureDeck.discards.addAll(attack);
-                System.out.println("Player " + player.number + "'s attack cards have been discarded.");
             }
         }
         for(Player lostPlayer : playersToRemove){

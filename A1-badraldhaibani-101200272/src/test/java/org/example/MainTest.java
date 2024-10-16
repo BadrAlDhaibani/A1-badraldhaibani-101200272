@@ -625,10 +625,7 @@ class MainTest {
 
         players.get(2).hand.add(new Card("Weapon", 30, "Excalibur"));
 
-        List<Player> participants = new ArrayList<>();
-        participants.addAll(players);
-
-        sponsor.stageStart(adventureDeck, stage, participants, scanner);
+        sponsor.stageStart(adventureDeck, stage, players, scanner);
 
         int discardSizeAfterStage = adventureDeck.getDiscardSize();
 
