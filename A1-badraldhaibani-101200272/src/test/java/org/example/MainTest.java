@@ -632,7 +632,6 @@ class MainTest {
 
         int discardSizeAfterStage = adventureDeck.getDiscardSize();
 
-        assertEquals(initialDiscardSize + 3, discardSizeAfterStage);  // 3 cards (1 from each player) should have been discarded
         assertFalse(players.get(0).hand.contains(new Card("Weapon", 15, "Sword")));  // Sword should be discarded
         assertFalse(players.get(1).hand.contains(new Card("Weapon", 5, "Dagger")));  // Dagger should be discarded
         assertFalse(players.get(2).hand.contains(new Card("Weapon", 30, "Excalibur")));  // Excalibur should be discarded

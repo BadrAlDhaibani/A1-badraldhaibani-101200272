@@ -238,13 +238,13 @@ public class Player {
                     playersToRemove.add(player);
                 }
                 adventureDeck.discards.addAll(attack);
-                System.out.println("Player " + player.number + "'s attack cards have been discarded.");
             }
         }
         for(Player lostPlayer : playersToRemove){
             System.out.println("Player "+lostPlayer.number+"'s attack is too weak and they are eliminated.");
         }
         questParticipants.removeAll(playersToRemove);
+        adventureDeck.discards.addAll(stage);
         if(questParticipants.isEmpty()){
             System.out.println("End of Quest");
         }
