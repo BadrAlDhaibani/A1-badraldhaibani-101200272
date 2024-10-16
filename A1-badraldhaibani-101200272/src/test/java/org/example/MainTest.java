@@ -592,4 +592,46 @@ class MainTest {
         assertEquals(1, players.size()); // Only 1 Player should remain
         assertEquals(4, players.get(0).number); // Player 4 is still in
     }
+
+    @Test
+    public void RESP_21_test_1() {
+        String simulatedInput = "t\n" +
+                                "2\n" +
+                                "q\n" +
+                                "t\n" +
+                                "2\n" +
+                                "q\n" +
+                                "t\n" +
+                                "2\n" +
+                                "q\n";
+        InputStream inputStream = new ByteArrayInputStream(simulatedInput.getBytes());
+        Scanner scanner = new Scanner(inputStream);
+
+        Player sponsor = new Player(1);
+        List<Player> players = new ArrayList<>();
+        players.add(new Player(2));
+        players.add(new Player(3));
+        players.add(new Player(4));
+
+        List<Card> stage = new ArrayList<>();
+        stage.add(new Card("Foe", 20)); // Stage value is 20
+
+        AdventureDeck adventureDeck = new AdventureDeck();
+        int initialDiscardSize = adventureDeck.getDiscardSize();
+
+        players.get(0).hand.add(new Card("Weapon", 15, "Sword"));
+
+        players.get(1).hand.add(new Card("Weapon", 5, "Dagger"));
+
+        players.get(2).hand.add(new Card("Weapon", 30, "Excalibur"));
+
+        sponsor.stageStart(adventureDeck, stage, players, scanner);
+
+        int discardSizeAfterStage = adventureDeck.getDiscardSize();
+
+        assertEquals(initialDiscardSize + 3, discardSizeAfterStage);  // 3 cards (1 from each player) should have been discarded
+        assertFalse(players.get(0).hand.contains(new Card("Weapon", 15, "Sword")));  // Sword should be discarded
+        assertFalse(players.get(1).hand.contains(new Card("Weapon", 5, "Dagger")));  // Dagger should be discarded
+        assertFalse(players.get(2).hand.contains(new Card("Weapon", 30, "Excalibur")));  // Excalibur should be discarded
+    }
 }
