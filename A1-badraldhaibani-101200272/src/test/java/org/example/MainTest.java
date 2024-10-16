@@ -674,6 +674,39 @@ class MainTest {
 
         assertEquals(adventureDeck.getDiscardSize()-3, stage.size());
     }
+    @Test
+    public void RESP_23_test_1() {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PrintStream originalOut = System.out;
+        System.setOut(new PrintStream(outputStream));
 
+        List<Player> players = new ArrayList<>();
+        players.add(new Player(1));
+        players.add(new Player(2));
+        players.add(new Player(3));
+        players.add(new Player(4));
+        players.get(0).shields = 6;
+        players.get(1).shields = 5;
+        players.get(2).shields = 4;
+        players.get(3).shields = 2;
 
+        List<Player> winners = new ArrayList<>();
+        boolean winnerFlag = false;
+        while (!winnerFlag){
+            //imaginary round where shields get added
+            for(Player player : players){
+                player.shields++;
+                player.checkIfWinner(winners);
+            }
+            if(!winners.isEmpty()){
+                winnerFlag = true;
+            }
+        }
+
+        System.setOut(originalOut);
+
+        String gameOutput = outputStream.toString();
+        assertTrue(gameOutput.contains("Winner(s):"));
+        assertTrue(gameOutput.contains("Player 1 with 7 shields."));
+    }
 }
