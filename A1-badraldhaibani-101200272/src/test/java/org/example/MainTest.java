@@ -640,43 +640,42 @@ class MainTest {
 
     @Test
     public void RESP_22_test_1() {
-        String simulatedInput = "1\n" +
+        String simulatedInput = "t\n" +
                                 "2\n" +
                                 "q\n" +
-                                "1\n" +
-                                "1\n" +
+                                "t\n" +
+                                "2\n" +
+                                "q\n" +
+                                "t\n" +
+                                "2\n" +
                                 "q\n";
         InputStream inputStream = new ByteArrayInputStream(simulatedInput.getBytes());
         Scanner scanner = new Scanner(inputStream);
 
         Player sponsor = new Player(1);
+        List<Player> players = new ArrayList<>();
+        players.add(new Player(2));
+        players.add(new Player(3));
+        players.add(new Player(4));
+
+        List<Card> stage = new ArrayList<>();
+        stage.add(new Card("Foe", 20)); // Stage value is 20
+
         AdventureDeck adventureDeck = new AdventureDeck();
-        int initialDiscardSize = adventureDeck.getDiscardSize();
 
-        sponsor.hand.add(new Card("Foe", 10));
-        sponsor.hand.add(new Card("Foe", 25));
-        sponsor.hand.add(new Card("Weapon", 15, "Sword"));
-        sponsor.hand.add(new Card("Weapon", 20, "Lance"));
+        players.get(0).hand.add(new Card("Weapon", 15, "Sword"));
 
-        List<List<Card>> quest = new ArrayList<>();
-        List<Card> stage1 = sponsor.buildStage(quest, scanner);
-        List<Card> stage2 = sponsor.buildStage(quest, scanner);
+        players.get(1).hand.add(new Card("Weapon", 5, "Dagger"));
 
-        quest.add(stage1);
-        quest.add(stage2);
+        players.get(2).hand.add(new Card("Weapon", 30, "Excalibur"));
 
-        int cardsUsedInQuest = stage1.size() + stage2.size();  // Total cards used: 4
-        int numberOfStages = quest.size();  // Total stages: 2
+        List<Player> participants = new ArrayList<>();
+        participants.addAll(players);
 
-        assertEquals(initialDiscardSize + cardsUsedInQuest, adventureDeck.getDiscardSize());
+        sponsor.stageStart(adventureDeck, stage, participants, scanner);
 
-        int expectedDrawCount = cardsUsedInQuest + numberOfStages;
-        for (int i = 0; i < expectedDrawCount; i++) {
-            sponsor.draw(adventureDeck, scanner);
-        }
-
-        if (sponsor.hand.size() < 12) {
-            assertEquals(expectedDrawCount, sponsor.hand.size()-cardsUsedInQuest);  // Sponsor should trim their hand to 12 cards
-        }
+        assertEquals(adventureDeck.getDiscardSize()-3, stage.size());
     }
+
+
 }
