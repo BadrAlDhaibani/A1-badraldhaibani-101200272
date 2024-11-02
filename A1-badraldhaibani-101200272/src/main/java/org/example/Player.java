@@ -40,7 +40,12 @@ public class Player {
                     if (position >= 0 && position < this.hand.size()){
                         Card discardedCard = this.hand.remove(position);
                         adventureDeck.discards.add(discardedCard);
-                        System.out.println("Discarded: "+discardedCard.getLabel()+" (Value: "+discardedCard.getValue()+")");
+                        if(discardedCard.getType().equals("Weapon")){
+                            System.out.println("Discarded: "+discardedCard.getLabel()+" (Value: "+discardedCard.getValue()+")");
+                        }
+                        else {
+                            System.out.println("Discarded: " + discardedCard.getType().charAt(0)+discardedCard.getValue() + " (Value: " + discardedCard.getValue() + ")");
+                        }
                         this.hand.add(drawnCard);
                         displayHand();
                         validInput = true;
