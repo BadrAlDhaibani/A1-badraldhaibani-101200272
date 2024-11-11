@@ -6,10 +6,42 @@ import java.util.List;
 public class Main {
     public static void main(String[] args){
         Game currentGame = new Game();
+        currentGame.createDecks();
+        currentGame.assignHands();
         List<Player> winners = new ArrayList<>();
         boolean winnerFlag = false;
         while (!winnerFlag){
-            currentGame.round();
+            Card eventDrawn = currentGame.eventCardDraw();
+            if(eventDrawn.getType().equals("Event")){
+                //REPLACE
+                currentGame.handleEvent(eventDrawn, currentGame.currentPlayer);
+            }
+            else{
+                Player sponsor = currentGame.findSponsor(eventDrawn);
+                List<List<Card>> quest = currentGame.questStages(eventDrawn, sponsor);
+                List<Player> Participants = currentGame.players;
+                Participants.remove(sponsor);
+                for(List<Card> stage : quest){
+                    List<List<Card>> Attacks = new ArrayList<>();
+                    for(Player player : Participants){
+                        if(currentGame.askParticipant(player)){
+                            Card drawnCard = currentGame.drawAdventureCard();
+                            currentGame.playerHandlesDrawnCard(drawnCard, player);
+                        }
+                        else{
+                            Participants.remove(player);
+                        }
+                    }
+                    for(Player player : Participants){
+                        Attacks.add(currentGame.prepareAttack(player));
+                    }
+                    List<Integer> goodAttacks = currentGame.checkAttacks(Attacks, stage);
+                    Participants = currentGame.stageWinners(Participants, goodAttacks);
+                }
+                for(Player player : Participants){
+                    currentGame.questWinnerRewarded(player, quest);
+                }
+            }
             winners = currentGame.checkForWinners();
             if (!winners.isEmpty()) {
                 winnerFlag = true;
