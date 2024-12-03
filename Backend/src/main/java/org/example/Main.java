@@ -1,10 +1,11 @@
 package org.example;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+@SpringBootApplication
 public class Main {
-    public static void main(String[] args){
+    /*public static void main(String[] args){
         Game currentGame = new Game();
         currentGame.createDecks();
         currentGame.assignHands();
@@ -52,5 +53,8 @@ public class Main {
             winner.printWinner();
         }
         System.out.println("Game Over.");
+    }*/
+    public static void main(String[] args) {
+        SpringApplication.run(Main.class, args);
     }
 }
