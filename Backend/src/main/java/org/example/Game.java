@@ -30,10 +30,10 @@ public class Game {
     }
     public void assignHands(){
         for (int i = 0; i < 12; i++){
-            players.get(0).hand.add(adventureDeck.cards.removeFirst());
-            players.get(1).hand.add(adventureDeck.cards.removeFirst());
-            players.get(2).hand.add(adventureDeck.cards.removeFirst());
-            players.get(3).hand.add(adventureDeck.cards.removeFirst());
+            players.get(0).hand.add(adventureDeck.cards.remove(0));
+            players.get(1).hand.add(adventureDeck.cards.remove(0));
+            players.get(2).hand.add(adventureDeck.cards.remove(0));
+            players.get(3).hand.add(adventureDeck.cards.remove(0));
         }
     }
     public List<Player> checkForWinners(){
@@ -68,7 +68,7 @@ public class Game {
             eventDeck.discards.clear();
             eventDeck.shuffleDeck();
         }
-        Card eventDrawn = eventDeck.cards.removeFirst();
+        Card eventDrawn = eventDeck.cards.remove(0);
         eventDeck.discards.add(eventDrawn);
         return eventDrawn;
     }
@@ -155,7 +155,7 @@ public class Game {
             adventureDeck.cards.addAll(adventureDeck.discards);
             adventureDeck.shuffleDeck();
         }
-        return adventureDeck.cards.removeFirst();
+        return adventureDeck.cards.remove(0);
     }
     public void playerHandlesDrawnCard(Card drawnCard, Player player){
         if(player.hand.size() == 12){

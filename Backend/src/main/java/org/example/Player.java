@@ -15,7 +15,7 @@ public class Player {
             adventureDeck.cards.addAll(adventureDeck.discards);
             adventureDeck.shuffleDeck();
         }
-        Card drawnCard = adventureDeck.cards.removeFirst();
+        Card drawnCard = adventureDeck.cards.remove(0);
         if(this.hand.size() == 12){
             System.out.print("P"+number+" has a full hand... (Press Enter to continue)");
             scanner.nextLine();
@@ -138,7 +138,7 @@ public class Player {
                     stageCards.clear();
                 }
                 else {
-                    int previousStageValue = quest.isEmpty() ? 0 : calculateStageValue(quest.getLast());
+                    int previousStageValue = quest.isEmpty() ? 0 : calculateStageValue(quest.get(quest.size()-1));
                     int currentStageValue = calculateStageValue(stageCards);
                     if(currentStageValue <= previousStageValue){
                         System.out.println("Insufficient value for this stage");
