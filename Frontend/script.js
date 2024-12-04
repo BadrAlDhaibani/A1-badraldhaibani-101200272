@@ -14,17 +14,21 @@ async function input() {
     appendToOutput(`> ${userInput}`);
     inputField.value = "";
     try {
-            const response = await fetch(`${apiBaseUrl}/input`, {
-                method: "POST",
-                body: JSON.stringify({ userInput }),
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
-            const result = await response.text();
-            appendToOutput(result); // Display server response
+        const response = await fetch(`${apiBaseUrl}/input`, {
+            method: "POST",
+            body: JSON.stringify({ userInput }),
+            headers: {"Content-Type": "application/json",},
+        });
+        const result = await response.text();
+        appendToOutput(result);
     } catch (error) {
         console.error("Error:", error);
         appendToOutput("Error communicating with server.");
+    }
+}
+
+function handleKey(event) {
+    if (event.key === "Enter") {
+        input();
     }
 }

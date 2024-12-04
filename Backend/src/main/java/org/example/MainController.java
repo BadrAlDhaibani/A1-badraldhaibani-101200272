@@ -1,5 +1,7 @@
 package org.example;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,6 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class MainController {
     @PostMapping("/input")
     public String input(@RequestBody String userInput) {
-        return "Received: "+userInput;
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode jsonNode = mapper.readTree(userInput);
+            return jsonNode.get("userInput").asText();
+        } catch (Exception e) {
+            return "Error processing input.";
+        }
     }
 }
