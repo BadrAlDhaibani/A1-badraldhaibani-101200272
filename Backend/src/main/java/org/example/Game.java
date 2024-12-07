@@ -22,6 +22,8 @@ public class Game {
     public List<List<Card>> attacks;
     public List<Card> currentAttack;
 
+    Card eventCard;
+
     public Game(){
         //Adding 4 players
         for (int i = 0; i < 4; i++){
@@ -47,8 +49,7 @@ public class Game {
         if(input.equals("start")){
             switch(gameState){
                 case "DRAW_EVENT_CARD":
-                    Card eventCard = eventCardDraw();
-                    eventCard = new Card("Quest",2); //TEST
+                    eventCard = eventCardDraw();
                     if(eventCard.getType().equals("Event")){
                         String eventMessage = handleEvent(eventCard);
                         return "P"+(playerTurn+1)+"'s turn\n"+"Event card drawn: " + eventCard.toString() + "\n" + eventMessage;
@@ -168,7 +169,7 @@ public class Game {
                         attacks = new ArrayList<>();
                         currentAttack = new ArrayList<>();
                         currentPlayer = participants.get(0);
-                        gameState = "GET_PARTICIPANTS";
+                        gameState = "DRAW_EVENT_CARD";
                         evaluationResult.append("Proceeding to Stage ").append(currentStageNumber).append("... (type 'start' to continue)");
                     }
                     return evaluationResult.toString();
@@ -461,6 +462,13 @@ public class Game {
         }
         attackInfo.append("----------------------\n");
         return attackInfo.toString();
+    }
+    public void rigEventCard(Card card) {
+        if (card.getType().equals("Event") || card.getType().equals("Quest")) {
+            eventDeck.cards.add(0, card); // Add the card to the top of the deck
+        } else {
+            throw new IllegalArgumentException("Only Event or Quest cards can be rigged.");
+        }
     }
 }
 
