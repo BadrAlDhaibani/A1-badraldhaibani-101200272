@@ -10,14 +10,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin(origins = "http://127.0.0.1:8081")
 public class MainController {
+    private Game game = new Game();
     @PostMapping("/input")
     public String input(@RequestBody String userInput) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             JsonNode jsonNode = mapper.readTree(userInput);
-            return jsonNode.get("userInput").asText();
+            String inputText = jsonNode.get("userInput").asText();
+            return game.handleInput(inputText);
         } catch (Exception e) {
-            return "Error processing input.";
+            return "Error processing input." + e;
         }
     }
 }

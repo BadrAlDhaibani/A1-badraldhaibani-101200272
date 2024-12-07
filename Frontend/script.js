@@ -2,7 +2,7 @@ const apiBaseUrl = "http://localhost:8080";
 
 function appendToOutput(content) {
     const output = document.getElementById("output");
-    output.innerHTML += `${content}\n`;
+    output.innerHTML += `${content.replace(/\n/g, "<br>")}\n`;
     output.scrollTop = output.scrollHeight;
 }
 

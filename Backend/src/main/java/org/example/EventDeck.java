@@ -29,10 +29,10 @@ public class EventDeck {
             if(i < 13){ //value 1 for Plague
                 cards.add(new Card("Event",1));
             }
-            else if(i < 15){ //value 1 for Plague
+            else if(i < 15){ //value 2 for Queen
                 cards.add(new Card("Event",2));
             }
-            else if(i < 17){ //value 1 for Plague
+            else if(i < 17){ //value 3 for Prosperity
                 cards.add(new Card("Event",3));
             }
         }

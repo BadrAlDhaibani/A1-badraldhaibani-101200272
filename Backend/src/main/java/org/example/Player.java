@@ -10,22 +10,23 @@ public class Player {
         hand = new ArrayList<>();
         this.number = number;
     }
-    public void draw(AdventureDeck adventureDeck, Scanner scanner){
+    public String draw(AdventureDeck adventureDeck){
         if (adventureDeck.getSize() == 0){
             adventureDeck.cards.addAll(adventureDeck.discards);
             adventureDeck.shuffleDeck();
         }
         Card drawnCard = adventureDeck.cards.remove(0);
+        if(drawnCard.getType().equals("Weapon")){
+            return "Drawn card: "+drawnCard.getLabel()+" (Value: "+drawnCard.getValue()+")";
+        }
+        else{
+            return "Drawn card: "+drawnCard.getType().charAt(0)+drawnCard.getValue();
+        }
+        /*
         if(this.hand.size() == 12){
             System.out.print("P"+number+" has a full hand... (Press Enter to continue)");
             scanner.nextLine();
             displayHand();
-            if(drawnCard.getType().equals("Weapon")){
-                System.out.println("Drawn card: "+drawnCard.getLabel()+" (Value: "+drawnCard.getValue()+")");
-            }
-            else{
-                System.out.println("Drawn card: "+drawnCard.getType().charAt(0)+drawnCard.getValue());
-            }
             boolean validInput = false;
             while(!validInput){
                 System.out.print("Please select the position of the card you'd like to discard or type 'q': ");
@@ -61,6 +62,11 @@ public class Player {
         else{
             this.hand.add(drawnCard);
         }
+
+         */
+    }
+    public void trimHand(AdventureDeck adventureDeck){
+
     }
     public void sortHand(){
         List<Card> foes = new ArrayList<>();
@@ -94,12 +100,13 @@ public class Player {
         hand.clear();
         hand.addAll(sortedHand);
     }
-    public void displayHand(){
+    public String displayHand(){
         sortHand();
-        System.out.println("Your current hand:");
-        for(int i = 0; i < hand.size(); i++){
-            System.out.println((i + 1)+": "+hand.get(i).toString());
+        StringBuilder handDisplay = new StringBuilder("Your current hand:\n");
+        for (int i = 0; i < hand.size(); i++) {
+            handDisplay.append((i + 1)).append(": ").append(hand.get(i).toString()).append("\n");
         }
+        return handDisplay.toString();
     }
 
     public Player sponsor(Card eventDrawn, List<Player> players, Scanner scanner) {
@@ -235,7 +242,7 @@ public class Player {
                 playersToRemove.add(player);
             }
             else{
-                player.draw(adventureDeck, scanner);
+                player.draw(adventureDeck);
                 List<Card> attack = player.prepareAttack(scanner);
                 int attackValue = calculateStageValue(attack);
                 System.out.println("Player "+player.number+" has an attack value of "+attackValue);
