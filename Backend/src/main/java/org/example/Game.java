@@ -103,8 +103,6 @@ public class Game {
                 case "BUILD_QUEST_STAGE":
                     return buildQuestStage(input);
                 case "GET_PARTICIPANTS":
-                    participants = new ArrayList<>(players);
-                    participants.remove(sponsor);
                     return getParticipants(input);
                 case "PARTICIPANTS_DRAW":
                     currentPlayer = participants.get(0);
@@ -307,6 +305,7 @@ public class Game {
                 if (questStages.size() == currentQuest.getValue()) {
                     gameState = "GET_PARTICIPANTS";
                     participants = new ArrayList<>(players);
+                    participants.remove(sponsor);
                     return displayQuestStages() + "Quest stages are complete. Determining participants... (type 'start' to continue)";
                 }
 
@@ -463,176 +462,6 @@ public class Game {
         attackInfo.append("----------------------\n");
         return attackInfo.toString();
     }
-
-
-    /*
-    public List<Player> checkForWinners(){
-        List<Player> winners = new ArrayList<>();
-        for(Player player : players){
-            player.checkIfWinner(winners);
-        }
-        return winners;
-    }
-    public void round(Card eventDrawn){
-        System.out.println("Drawn "+eventDrawn.getType().charAt(0)+eventDrawn.getValue());
-        if (eventDrawn.getType().equals("Event")){
-            handleEvent(eventDrawn, currentPlayer);
-        }
-        else{
-            Player sponsor = findSponsor(eventDrawn);
-            handleQuest(eventDrawn, sponsor);
-        }
-        playerTurn++;
-        currentPlayer = players.get(playerTurn);
-        if (playerTurn > 3) {
-            playerTurn = 0;
-        }
-    }
-
-
-    public Player findSponsor(Card eventDrawn){
-        return currentPlayer.sponsor(eventDrawn, players, scanner);
-    }
-    public List<List<Card>> questStages(Card eventDrawn, Player sponsor){
-        List<List<Card>> quest = new ArrayList<>();
-        for(int i = 0; i < eventDrawn.getValue(); i++){
-            quest.add(sponsor.buildStage(quest, scanner));
-        }
-        return quest;
-    }
-    public boolean askParticipant(Player player){
-        System.out.print("P"+player.number+", do you want to participate in the quest? (y/n): ");
-        String input = scanner.nextLine();
-        if(input.equalsIgnoreCase("y")){
-            System.out.println("P"+player.number+" is participating in the quest");
-            return true;
-        }
-        else{
-            System.out.println("P"+player.number+" has declined to participate");
-            return false;
-        }
-    }
-
-    public List<Card> prepareAttack(Player player){
-        return player.prepareAttack(scanner);
-    }
-    public List<Integer> checkAttacks(List<List<Card>> Attacks, List<Card> stage){
-        List<Integer> goodAttacks = new ArrayList<>();
-        for(List<Card> attack : Attacks){
-            if(calculateCardsValue(attack) >= calculateCardsValue(stage)){
-                goodAttacks.add(Attacks.indexOf(attack));
-            }
-        }
-        return goodAttacks;
-    }
-    public List<Player> stageWinners(List<Player> Participants, List<Integer> goodAttacks){
-        List<Player> stageWinners = new ArrayList<>();
-        for(int index : goodAttacks){
-            stageWinners.add(Participants.get(index));
-            System.out.println("P"+Participants.get(index).number+" will proceed to the next stage");
-        }
-        return stageWinners;
-    }
-    public void questWinnerRewarded(Player player, List<List<Card>> Quest){
-        for(List<Card> stage : Quest){
-            player.shields++;
-        }
-    }
-    public int calculateCardsValue(List<Card> cards){
-        int totalValue = 0;
-        for(Card card : cards){
-            totalValue += card.getValue();
-        }
-        return totalValue;
-    }
-    public Card drawAdventureCard(){
-        if (adventureDeck.getSize() == 0){
-            adventureDeck.cards.addAll(adventureDeck.discards);
-            adventureDeck.shuffleDeck();
-        }
-        return adventureDeck.cards.remove(0);
-    }
-    public void playerHandlesDrawnCard(Card drawnCard, Player player){
-        if(player.hand.size() == 12){
-            System.out.print("P"+player.number+" has a full hand... (Press Enter to continue)");
-            scanner.nextLine();
-            player.displayHand();
-            if(drawnCard.getType().equals("Weapon")){
-                System.out.println("Drawn card: "+drawnCard.getLabel()+" (Value: "+drawnCard.getValue()+")");
-            }
-            else{
-                System.out.println("Drawn card: "+drawnCard.getType().charAt(0)+drawnCard.getValue());
-            }
-            boolean validInput = false;
-            while(!validInput){
-                System.out.print("Please select the position of the card you'd like to discard or type 'q': ");
-                String input = scanner.nextLine();
-                if(input.equalsIgnoreCase("q")){
-                    System.out.println("Canceled, no cards discarded.");
-                    adventureDeck.discards.add(drawnCard);
-                    return;
-                }
-                try{
-                    int position = Integer.parseInt(input) - 1;
-                    if (position >= 0 && position < player.hand.size()){
-                        Card discardedCard = player.hand.remove(position);
-                        adventureDeck.discards.add(discardedCard);
-                        if(discardedCard.getType().equals("Weapon")){
-                            System.out.println("Discarded: "+discardedCard.getLabel()+" (Value: "+discardedCard.getValue()+")");
-                        }
-                        else {
-                            System.out.println("Discarded: " + discardedCard.getType().charAt(0)+discardedCard.getValue() + " (Value: " + discardedCard.getValue() + ")");
-                        }
-                        player.hand.add(drawnCard);
-                        player.displayHand();
-                        validInput = true;
-                    }
-                    else {
-                        System.out.println("Invalid position, please enter enter a valid card index");
-                    }
-                } catch (NumberFormatException e){
-                    System.out.println("Invalid input, please enter a valid number");
-                }
-            }
-        }
-        else{
-            player.hand.add(drawnCard);
-        }
-    }
-
-    public void handleQuest(Card eventDrawn, Player sponsor){
-        List<List<Card>> quest = new ArrayList<>();
-        if(sponsor !=  null){
-            for(int i = 0; i < eventDrawn.getValue(); i++){
-                quest.add(sponsor.buildStage(quest, scanner));
-            }
-            sponsor.printQuest(quest);
-            System.out.println("---------------Quest Build Finished---------------");
-            List<Player> participants = sponsor.getParticipants(players, scanner);
-            if(!participants.isEmpty()){
-                int stageNum = 1;
-                for(List<Card> stage : quest){
-                    if(!participants.isEmpty()){
-                        System.out.println("---------------Stage "+stageNum+"---------------");
-                        sponsor.stageStart(adventureDeck, stage, participants, scanner);
-                        stageNum++;
-                    }
-                    else{
-                        break;
-                    }
-                }
-                if (!participants.isEmpty()) {
-                    for (Player player : participants) {
-                        player.shields += stageNum;
-                        System.out.println("Player " + player.number + " wins and earns "+stageNum+" shields,  making that  "+player.shields+" total");
-                    }
-                }
-            }
-            else{
-                System.out.println("No participants found... end of quest");
-            }
-        }
-    }
-
-     */
 }
+
+
